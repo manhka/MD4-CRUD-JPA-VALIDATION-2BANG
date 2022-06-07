@@ -4,6 +4,8 @@ import com.codegym.cms.model.Customer;
 import com.codegym.cms.model.Province;
 import com.codegym.cms.repository.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,7 +17,10 @@ public class CustomerServiceImpl implements ICustomerService{
     public Iterable<Customer> findAll() {
         return customerRepository.findAll();
     }
-
+    @Override
+    public Page<Customer> findAll(Pageable pageable) {
+        return customerRepository.findAll(pageable);
+    }
     @Override
     public Optional<Customer> findById(Long id) {
         return customerRepository.findById(id);
@@ -34,5 +39,9 @@ customerRepository.deleteById(id);
     @Override
     public Iterable<Customer> findAllByProvince(Province province) {
         return customerRepository.findAllByProvince(province);
+    }
+    @Override
+    public Page<Customer> findAllByNameContaining(String name, Pageable pageable) {
+        return customerRepository.findAllByNameContaining(name, pageable);
     }
 }
